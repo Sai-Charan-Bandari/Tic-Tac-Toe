@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <table >
+        <tr>
+            <td ><button id="00" onclick="selectTile(0,0)"></button></td>
+            <td ><button id="01" onclick="selectTile(0,1)"></button></td>
+            <td ><button id="02" onclick="selectTile(0,2)"></button></td>
+        </tr>
+        <tr>
+            <td ><button id="10" onclick="selectTile(1,0)"></button></td>
+            <td ><button id="11" onclick="selectTile(1,1)"></button></td>
+            <td ><button id="12" onclick="selectTile(1,2)"></button></td>
+        </tr>
+        <tr>
+            <td ><button id="20" onclick="selectTile(2,0)"></button></td>
+            <td ><button id="21" onclick="selectTile(2,1)"></button></td>
+            <td ><button id="22" onclick="selectTile(2,2)"></button></td>
+        </tr>
+    </table>
+    <div id="turn">
+        #BSC#
+    </div>
+    <span>
+        <div id="score1">X score = 0</div>
+        <div id="score2">O score = 0</div>
+    </span>
+</body>
+<script>
+    let step = 0;
+    let win1 = 0;
+    let win2 = 0;
+    let turn=document.getElementById("turn");
+    let turnVal='X';
+    let selected=[[],[],[]];
+    setTimeout(()=>{clearTiles();turn.innerText="NEW GAME";},1000);
+    setTimeout(()=>{turn.innerText="turn : "+turnVal;},2000);
+    let score1=document.getElementById("score1");
+    let score2=document.getElementById("score2");
+
+    function clearTiles()
+    {
+        step=0;
+        for(let i=0;i<3;i++)
+        {
+            for(let j=0;j<3;j++)
+            {
+                // console.log(i+""+j);
+                selected[i][j]=-1;
+                let x=document.getElementById(`${i}${j}`);
+                x.textContent='';
+            }
+        }
+    }
+
+    function checkWin(i,j)
+    {
+        let x=document.getElementById(`${i}${j}`);
+            if(selected[i][0]==selected[i][1] && selected[i][1]==selected[i][2])
+            {
+                //row check
+                return true;
+            }
+            else if(selected[0][j]==selected[1][j] && selected[1][j]==selected[2][j])
+            {
+                //column check
+                return true;
+            }
+            else 
+            {
+                //diagonal check
+                if(selected[0][0]==selected[1][1] && selected[1][1]==selected[2][2])
+                return true;
+                else if(selected[0][2]==selected[1][1] && selected[1][1]==selected[2][0])
+                return true;
+            }   
+            return false;
+    }
+
+    function selectTile(i,j)
+    {
+        if(selected[i][j] == -1)
+        {
+            step++;
+            let x=document.getElementById(`${i}${j}`);
+            // console.log(x);
+            if(turnVal=='O')
+            {
+                selected[i][j]="O";
+                x.textContent="O";
+                if(step >= 5 && checkWin(i,j)==true) //minimum 5 steps are required to checkWin
+                {
+                    turn.innerText="O WINS";
+                    win2++;
+                    score2.innerText=`O score = ${win2}`;
+                    turnVal='X';
+                    setTimeout(()=>{clearTiles();turn.innerText="NEW GAME";},1000);
+                    setTimeout(()=>{turn.innerText="turn : "+turnVal;},2000);
+                    return;
+                }
+                if(step==9 && checkWin(i,j)==false)
+                {
+                    turn.innerText="GAME DRAW";
+                    turnVal='X';
+                    setTimeout(()=>{clearTiles();turn.innerText="NEW GAME";},1000);
+                    setTimeout(()=>{turn.innerText="turn : "+turnVal;},2000);
+                    return;
+                }
+                changeTurn();
+                console.log("O");
+            }
+            else
+            {
+                selected[i][j]="X";
+                x.textContent="X";
+                if(step >= 5 && checkWin(i,j)==true) //minimum 5 steps are required to checkWin
+                {
+                    turn.innerText="X WINS";
+                    win1++;
+                    score1.innerText=`X score = ${win1}`;
+                    turnVal='O';
+                    setTimeout(()=>{clearTiles();turn.innerText="NEW GAME";},1000);
+                    setTimeout(()=>{turn.innerText="turn : "+turnVal;},2000);
+                    return;
+                }
+                if(step==9 && checkWin(i,j)==false)
+                {
+                    turn.innerText="GAME DRAW";
+                    turnVal='O';
+                    setTimeout(()=>{clearTiles();turn.innerText="NEW GAME";},1000);
+                    setTimeout(()=>{turn.innerText="turn : "+turnVal;},2000);
+                    return;
+                }
+                changeTurn();
+                console.log("X");
+            }
+        }
+        else
+        console.log("tile already selected");
+    }
+    function changeTurn()
+    {
+        if(turnVal == 'X')
+        {
+            turnVal='O';
+            turn.innerText="turn : "+turnVal;
+        }
+        else
+        {
+            turnVal='X';
+            turn.innerText="turn : "+turnVal;   
+        }
+    }
+</script>
+</html>
