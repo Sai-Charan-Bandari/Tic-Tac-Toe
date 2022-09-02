@@ -1,7 +1,39 @@
+body{
+    font-size: 20px;
+    font-family:'Arial Narrow Bold', sans-serif;
+}
+#reset{
+    margin-left: 2%;
+    width:10%;
+    text-align: center;
+}
+#ThemeA{
+    margin-left: 2%;
+    width:20px;
+    height:20px;
+    text-align: center;
+    background-color: lightblue;
+}
+#ThemeB{
+    margin-left: 2%;
+    width:20px;
+    height:20px;
+    text-align: center;
+    background-color: navy;
+}
+#ThemeC{
+    margin-left: 2%;
+    width:20px;
+    height:20px;
+    text-align: center;
+    background-color: black;
+}
 table{
     margin: auto;
-    /* width: 50%;
-    height: 100%; */
+    margin-top: 5%;
+    /* background-color: blue; */
+    width: 200px;
+    height: 200px;
 }
 td{
     border: 2px solid black;
@@ -11,11 +43,13 @@ td{
 button{
     width: 100%;
     height: 100%;
+    font-size: 20px;
 }
 button:active{
     border:2px solid black;
 }
 #turn{
+    margin-top: 3%;
     text-align: center;
     /* margin:auto; */
 }
@@ -24,4 +58,19 @@ span{
 }
 span div{
     margin:auto auto;
+}
+.A{
+    font-family:'Arial Narrow Bold', sans-serif;
+}
+.B{
+    /* font-family: Impact; */
+    font-family:'Arial Narrow Bold', sans-serif;
+    background-color: navy;
+    color: yellow;
+}
+.C{
+    font-family:'Arial Narrow Bold', sans-serif;
+    /* font-family: Impact; */
+    background-color: black;
+    color: aqua;
 }

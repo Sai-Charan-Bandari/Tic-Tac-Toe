@@ -5,21 +5,26 @@
     <link rel="stylesheet" href="game.css">
 </head>
 <body>
+    <audio id="audio" src="alert.mp3"></audio>
+    <button id="reset" onclick="resetScore()">Reset Scores</button>
+    <button id="ThemeA" onclick="setTheme('A')"></button>
+    <button id="ThemeB" onclick="setTheme('B')"></button>
+    <button id="ThemeC" onclick="setTheme('C')"></button>
     <table >
         <tr>
-            <td ><button id="00" onclick="selectTile(0,0)"></button></td>
-            <td ><button id="01" onclick="selectTile(0,1)"></button></td>
-            <td ><button id="02" onclick="selectTile(0,2)"></button></td>
+            <td ><button id="00" class="A" onclick="selectTile(0,0)"></button></td>
+            <td ><button id="01" class="A" onclick="selectTile(0,1)"></button></td>
+            <td ><button id="02" class="A" onclick="selectTile(0,2)"></button></td>
         </tr>
         <tr>
-            <td ><button id="10" onclick="selectTile(1,0)"></button></td>
-            <td ><button id="11" onclick="selectTile(1,1)"></button></td>
-            <td ><button id="12" onclick="selectTile(1,2)"></button></td>
+            <td ><button id="10" class="A" onclick="selectTile(1,0)"></button></td>
+            <td ><button id="11" class="A" onclick="selectTile(1,1)"></button></td>
+            <td ><button id="12" class="A" onclick="selectTile(1,2)"></button></td>
         </tr>
         <tr>
-            <td ><button id="20" onclick="selectTile(2,0)"></button></td>
-            <td ><button id="21" onclick="selectTile(2,1)"></button></td>
-            <td ><button id="22" onclick="selectTile(2,2)"></button></td>
+            <td ><button id="20" class="A" onclick="selectTile(2,0)"></button></td>
+            <td ><button id="21" class="A" onclick="selectTile(2,1)"></button></td>
+            <td ><button id="22" class="A" onclick="selectTile(2,2)"></button></td>
         </tr>
     </table>
     <div id="turn">
@@ -31,6 +36,8 @@
     </span>
 </body>
 <script>
+    let audio=document.getElementById("audio");
+    let reset=document.getElementById("reset");
     let step = 0;
     let win1 = 0;
     let win2 = 0;
@@ -42,6 +49,41 @@
     let score1=document.getElementById("score1");
     let score2=document.getElementById("score2");
 
+    function setTheme(val){
+        if(val=='C'){
+            for(let i=0;i<3;i++){
+                for(let j=0;j<3;j++){
+                    let x=document.getElementById(`${i}${j}`).className='C';
+                    // x.removeAttribute('class');
+                    // x.setAttribute('class','ThemeC');
+                }
+            }
+        }
+        else if(val=='B'){
+            for(let i=0;i<3;i++){
+                for(let j=0;j<3;j++){
+                    let x=document.getElementById(`${i}${j}`).className='B';
+                }
+            }
+        }
+        else{
+            for(let i=0;i<3;i++){
+                for(let j=0;j<3;j++){
+                    let x=document.getElementById(`${i}${j}`).className='A';
+                }
+            }
+        }
+    }
+    function resetScore(){
+        if(win1==0 && win2==0)
+        return;
+        if(!confirm("reset scores ?"))
+        return;
+        win1=0;win2=0;
+        score2.innerText=`O score = ${win2}`;
+        score1.innerText=`X score = ${win1}`;
+        clearTiles();
+    }
     function clearTiles()
     {
         step=0;
@@ -83,6 +125,7 @@
 
     function selectTile(i,j)
     {
+        console.log(step);
         if(selected[i][j] == -1)
         {
             step++;
@@ -94,6 +137,7 @@
                 x.textContent="O";
                 if(step >= 5 && checkWin(i,j)==true) //minimum 5 steps are required to checkWin
                 {
+                    audio.play();
                     turn.innerText="O WINS";
                     win2++;
                     score2.innerText=`O score = ${win2}`;
@@ -119,6 +163,7 @@
                 x.textContent="X";
                 if(step >= 5 && checkWin(i,j)==true) //minimum 5 steps are required to checkWin
                 {
+                    audio.play();
                     turn.innerText="X WINS";
                     win1++;
                     score1.innerText=`X score = ${win1}`;
